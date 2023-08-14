@@ -1,17 +1,17 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from 'react'
 
 interface LayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <header>[header]</header>
+        <header style={{ border: 'solid 1px blue' }}>[header]</header>
         <main>{children}</main>
-        <footer>[footer]</footer>
+        <footer style={{ border: 'solid 1px blue' }}>[footer]</footer>
       </body>
     </html>
-  );
+  )
 }
