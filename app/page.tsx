@@ -1,13 +1,5 @@
-'use client'
-
-import { useEffect } from 'react'
-
 export default function HomePage() {
   console.log('HomePage render')
-
-  useEffect(() => {
-    alert('hmm')
-  }, [])
 
   return (
     <>
