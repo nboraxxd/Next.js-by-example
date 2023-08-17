@@ -19,12 +19,16 @@ export default function RootLayout({ children }) {
                 <Link href="/reviews">Review</Link>
               </li>
               <li>
-                <Link href="/about">About</Link>
+                <Link href="/about" prefetch={false}>
+                  About
+                </Link>
               </li>
             </ul>
           </nav>
         </header>
+
         <main>{children}</main>
+
         <footer style={{ border: 'solid 1px blue' }}>[footer]</footer>
       </body>
     </html>
