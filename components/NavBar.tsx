@@ -5,7 +5,7 @@ export default function NavBar() {
     <nav>
       <ul className="flex gap-4">
         <li>
-          <Link href="/" className="font-orbitron font-semibold text-orange-800 hover:underline transition">
+          <Link href="/" className="text-orange-800 font-orbitron font-semibold hover:underline transition">
             Indie Gamer
           </Link>
         </li>
