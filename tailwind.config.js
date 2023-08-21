@@ -9,7 +9,11 @@ module.exports = {
     './src/**/*.{jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        orbitron: ['var(--font-orbitron)', 'san-serif'],
+      },
+    },
   },
   plugins: [],
 }

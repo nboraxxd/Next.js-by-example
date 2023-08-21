@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import NavBar from '@/components/NavBar'
+import { orbitron } from '@/app/font'
 import './globals.css'
 
 interface LayoutProps {
@@ -8,7 +9,7 @@ interface LayoutProps {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={orbitron.variable}>
       <body>
         <div className="flex flex-col min-h-screen px-4 py-2 bg-orange-50">
           <header>
