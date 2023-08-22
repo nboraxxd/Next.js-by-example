@@ -2,12 +2,14 @@ import { readFile } from 'node:fs/promises'
 import { marked } from 'marked'
 import matter from 'gray-matter'
 
-export async function getReview(slug: string): Promise<{
+interface Review {
   title: string
   date: string
   image: string
   body: string | TrustedHTML
-}> {
+}
+
+export async function getReview(slug: string): Promise<Review> {
   const text = await readFile(`./content/reviews/${slug}.md`, 'utf8')
   const {
     content,
