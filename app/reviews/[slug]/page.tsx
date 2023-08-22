@@ -3,14 +3,9 @@ import Heading from '@/components/Heading'
 
 interface Props {
   params: { slug: string }
-  searchParams: {}
 }
 
-export default async function ReviewPage(props: Props) {
-  const {
-    params: { slug },
-  } = props
-
+export default async function ReviewPage({ params: { slug } }: Props) {
   const review = await getReview(slug)
 
   return (
