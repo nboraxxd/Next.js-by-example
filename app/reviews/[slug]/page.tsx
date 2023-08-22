@@ -1,8 +1,14 @@
-import { getReview } from '@/lib/reviews'
+import { getReview, getSlugs } from '@/lib/reviews'
 import Heading from '@/components/Heading'
 
 interface Props {
   params: { slug: string }
+}
+
+export async function generateStaticParams() {
+  const slugs = await getSlugs()
+
+  return slugs.map((slug) => ({ slug }))
 }
 
 export default async function ReviewPage({ params: { slug } }: Props) {
