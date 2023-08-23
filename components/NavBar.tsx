@@ -11,7 +11,7 @@ export default function NavBar() {
         </li>
         <li className="ml-auto">
           <Link href="/reviews" className="text-orange-800 font-medium hover:underline transition">
-            Review
+            Reviews
           </Link>
         </li>
         <li>

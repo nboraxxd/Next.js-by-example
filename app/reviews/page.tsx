@@ -1,7 +1,12 @@
-import { Fragment } from 'react'
-import Link from 'next/link'
+import type { Metadata } from 'next'
 import { getReviews } from '@/lib/reviews'
+import Link from 'next/link'
 import Heading from '@/components/Heading'
+
+export const metadata: Metadata = {
+  title: 'Reviews',
+  // description: ''
+}
 
 export default async function ReviewsPage() {
   const reviews = await getReviews()
