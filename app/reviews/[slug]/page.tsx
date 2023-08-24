@@ -1,6 +1,7 @@
 import { getReview, getSlugs } from '@/lib/reviews'
 import Heading from '@/components/Heading'
 import { Metadata } from 'next'
+import ShareLinkButton from '@/components/ShareLinkButton'
 
 interface ReviewPageParams {
   slug: string
@@ -30,7 +31,10 @@ export default async function ReviewPage({ params: { slug } }: ReviewPageProps) 
   return (
     <>
       <Heading>{review.title}</Heading>
-      <p className="italic my-2">{review.date}</p>
+      <div className="mt-3 mb-4 flex items-center gap-3">
+        <p className="italic">{review.date}</p>
+        <ShareLinkButton />
+      </div>
       <img src={review.image} alt={review.title} width={640} height={360} className="my-2 rounded" />
       <article className="max-w-screen-sm prose prose-slate" dangerouslySetInnerHTML={{ __html: review.body }} />
     </>
