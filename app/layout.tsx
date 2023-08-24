@@ -31,6 +31,7 @@ export default function RootLayout({ children }: LayoutProps) {
             <a href="https://rawg.io/" target="_blank" className="text-orange-800 transition hover:underline">
               RAWG
             </a>
+            {' '}| Deployed on Vercel
           </footer>
         </div>
       </body>
