@@ -5,11 +5,11 @@ import Heading from '@/components/Heading'
 
 export const metadata: Metadata = {
   title: 'Reviews',
-  // description: ''
 }
 
 export default async function ReviewsPage() {
   const reviews = await getReviews()
+  console.log('🔥 ~ ReviewsPage ~ reviews:', reviews)
 
   return (
     <>

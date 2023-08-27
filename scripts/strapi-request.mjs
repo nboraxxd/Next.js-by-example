@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs'
 import qs from 'qs'
 
-const URL =
+const url =
   'http://localhost:1337/api/reviews' +
   '?' +
   qs.stringify(
@@ -13,9 +13,8 @@ const URL =
     },
     { encodeValuesOnly: true }
   )
-console.log('🔥 ~ URL:', URL)
 
-const response = await fetch(URL)
+const response = await fetch(url)
 const body = await response.json()
 const formatted = JSON.stringify(body, null, 2)
 const file = 'scripts/strapi-response.json'
