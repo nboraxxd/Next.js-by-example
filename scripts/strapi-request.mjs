@@ -1,6 +1,19 @@
 import { writeFileSync } from 'node:fs'
+import qs from 'qs'
 
-const URL = 'http://localhost:1337/api/reviews' + '?populate=*'
+const URL =
+  'http://localhost:1337/api/reviews' +
+  '?' +
+  qs.stringify(
+    {
+      fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+      populate: { image: { fields: ['url'] } },
+      sort: ['publishedAt:desc'],
+      pagination: { pageSize: 6 },
+    },
+    { encodeValuesOnly: true }
+  )
+console.log('🔥 ~ URL:', URL)
 
 const response = await fetch(URL)
 const body = await response.json()
