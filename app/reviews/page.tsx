@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
@@ -20,7 +21,7 @@ export default async function ReviewsPage() {
             className="w-80 border rounded bg-white shadow transition-all hover:shadow-lg hover:-mt-[0.125rem] hover:mb-[0.125rem]"
           >
             <Link href={`/reviews/${review.slug}`}>
-              <img src={review.image} alt={review.title} width={320} height={180} className="rounded-t" />
+              <Image src={review.image} alt={review.title} width={320} height={180} className="rounded-t" />
               <h2 className="py-2 font-orbitron font-medium text-lg text-center">{review.title}</h2>
             </Link>
           </li>

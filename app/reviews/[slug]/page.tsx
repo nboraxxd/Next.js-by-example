@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { getReview, getSlugs } from '@/lib/reviews'
 import Heading from '@/components/Heading'
 import { Metadata } from 'next'
@@ -35,7 +36,7 @@ export default async function ReviewPage({ params: { slug } }: ReviewPageProps) 
         <p className="italic">{review.date}</p>
         <ShareLinkButton />
       </div>
-      <img src={review.image} alt={review.title} width={640} height={360} className="my-2 rounded" />
+      <Image src={review.image} alt={review.title} width={640} height={360} className="my-2 rounded" />
       <article className="max-w-screen-sm prose prose-slate" dangerouslySetInnerHTML={{ __html: review.body }} />
     </>
   )
