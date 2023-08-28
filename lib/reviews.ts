@@ -1,8 +1,7 @@
-import { readFile, readdir } from 'node:fs/promises'
-import { marked } from 'marked'
-import matter from 'gray-matter'
-import { v4 as uuidv4 } from 'uuid'
 import qs from 'qs'
+import { readdir } from 'node:fs/promises'
+import { marked } from 'marked'
+import { SuccessResponse } from '@/types/utils.type'
 
 interface Review {
   id: number
@@ -36,20 +35,13 @@ type ExtendedData = Data['attributes'] & { body: string }
 const CMS_URL = 'http://localhost:1337'
 
 export async function getReview(slug: string): Promise<Review> {
-  const url =
-    `${CMS_URL}/api/reviews?` +
-    qs.stringify(
-      {
-        filters: { slug: { $eq: slug } },
-        fields: ['slug', 'title', 'body', 'publishedAt', 'subtitle'],
-        populate: { image: { fields: ['url'] } },
-        pagination: { pageSize: 1, withCount: false },
-      },
-      { encodeValuesOnly: true }
-    )
+  const { data } = await fetchReviews<Pick<Data, 'id'> & { attributes: ExtendedData }>({
+    filters: { slug: { $eq: slug } },
+    fields: ['slug', 'title', 'body', 'publishedAt', 'subtitle'],
+    populate: { image: { fields: ['url'] } },
+    pagination: { pageSize: 1, withCount: false },
+  })
 
-  const response = await fetch(url)
-  const { data }: { data: (Pick<Data, 'id'> & { attributes: ExtendedData })[] } = await response.json()
   const item = data[0]
   return {
     id: item.id,
@@ -65,20 +57,12 @@ export async function getReview(slug: string): Promise<Review> {
 }
 
 export async function getReviews(): Promise<Review[]> {
-  const url =
-    `${CMS_URL}/api/reviews?` +
-    qs.stringify(
-      {
-        fields: ['slug', 'title', 'subtitle', 'publishedAt'],
-        populate: { image: { fields: ['url'] } },
-        sort: ['publishedAt:desc'],
-        pagination: { pageSize: 6 },
-      },
-      { encodeValuesOnly: true }
-    )
-
-  const response = await fetch(url)
-  const { data }: { data: Data[] } = await response.json()
+  const { data } = await fetchReviews<Data>({
+    fields: ['slug', 'title', 'subtitle', 'publishedAt'],
+    populate: { image: { fields: ['url'] } },
+    sort: ['publishedAt:desc'],
+    pagination: { pageSize: 6 },
+  })
 
   return data.map((item) => ({
     id: item.id,
@@ -88,6 +72,16 @@ export async function getReviews(): Promise<Review[]> {
     image: `${CMS_URL}${item.attributes.image.data.attributes.url}`,
     body: item.attributes.subtitle,
   }))
+}
+
+async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
+  const url = `${CMS_URL}/api/reviews?` + qs.stringify(parameters, { encodeValuesOnly: true })
+
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`CMS returned ${response.status} for ${url}`)
+  }
+  return await response.json()
 }
 
 export async function getSlugs() {
