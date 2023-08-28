@@ -30,12 +30,12 @@ type Data = {
   }
 }
 
-type ExtendedData = Data['attributes'] & { body: string }
+type ExtendedData = Pick<Data, 'id'> & { attributes: Data['attributes'] & { body: string } }
 
 const CMS_URL = 'http://localhost:1337'
 
 export async function getReview(slug: string): Promise<Review> {
-  const { data } = await fetchReviews<Pick<Data, 'id'> & { attributes: ExtendedData }>({
+  const { data } = await fetchReviews<ExtendedData>({
     filters: { slug: { $eq: slug } },
     fields: ['slug', 'title', 'body', 'publishedAt', 'subtitle'],
     populate: { image: { fields: ['url'] } },
@@ -44,11 +44,7 @@ export async function getReview(slug: string): Promise<Review> {
 
   const item = data[0]
   return {
-    id: item.id,
-    slug: item.attributes.slug,
-    title: item.attributes.title,
-    date: item.attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
-    image: `${CMS_URL}${item.attributes.image.data.attributes.url}`,
+    ...toReview(item),
     body: marked(item.attributes.body, {
       headerIds: false,
       mangle: false,
@@ -65,11 +61,7 @@ export async function getReviews(): Promise<Review[]> {
   })
 
   return data.map((item) => ({
-    id: item.id,
-    slug: item.attributes.slug,
-    title: item.attributes.title,
-    date: item.attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
-    image: `${CMS_URL}${item.attributes.image.data.attributes.url}`,
+    ...toReview(item),
     body: item.attributes.subtitle,
   }))
 }
@@ -94,4 +86,14 @@ export async function getSlugs() {
 export async function getFeaturedReview() {
   const reviews = await getReviews()
   return reviews[0]
+}
+
+function toReview(item: Data | ExtendedData): Omit<Review, 'body'> {
+  return {
+    id: item.id,
+    slug: item.attributes.slug,
+    title: item.attributes.title,
+    date: item.attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
+    image: `${CMS_URL}${item.attributes.image.data.attributes.url}`,
+  }
 }
