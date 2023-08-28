@@ -6,15 +6,12 @@ const url =
   '?' +
   qs.stringify(
     {
-      filters: { slug: { $eq: 'hades-2018' } },
-      fields: ['slug', 'title', 'body', 'publishedAt', 'subtitle'],
-      populate: { image: { fields: ['url'] } },
-      pagination: { pageSize: 1, withCount: false },
+      fields: ['slug'],
+      sort: ['publishedAt:desc'],
+      pagination: { pageSize: 100 },
     },
     { encodeValuesOnly: true }
   )
-
-console.log(url)
 
 const response = await fetch(url)
 const body = await response.json()

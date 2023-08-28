@@ -32,6 +32,8 @@ type Data = {
 
 type ExtendedData = Pick<Data, 'id'> & { attributes: Data['attributes'] & { body: string } }
 
+type ShortenedData = Pick<Data, 'id'> & { attributes: { slug: string } }
+
 const CMS_URL = 'http://localhost:1337'
 
 export async function getReview(slug: string): Promise<Review> {
@@ -77,10 +79,13 @@ async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
 }
 
 export async function getSlugs() {
-  const files = await readdir('./content/reviews')
-  const slugs = files.filter((file) => file.endsWith('.md')).map((item) => item.slice(0, -'.md'.length))
+  const { data } = await fetchReviews<ShortenedData>({
+    fields: ['slug'],
+    sort: ['publishedAt:desc'],
+    pagination: { pageSize: 100 },
+  })
 
-  return slugs
+  return data
 }
 
 export async function getFeaturedReview() {
