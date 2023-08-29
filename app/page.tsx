@@ -27,9 +27,9 @@ export default async function HomePage() {
                 className="rounded-t md:rounded-l md:rounded-r-none"
                 priority={index === 0}
               />
-              <div className="flex flex-col py-2 font-orbitron md:grow">
-                <h2 className="font-medium text-lg text-center">{review.title}</h2>
-                <p className="mt-4 px-6 md:px-12">{review.body as ReactNode}</p>
+              <div className="flex flex-col py-2 md:grow">
+                <h2 className="font-orbitron font-semibold text-lg text-center">{review.title}</h2>
+                <p className="hidden md:block mt-4 px-12 text-center">{review.subtitle}</p>
               </div>
             </Link>
           </li>

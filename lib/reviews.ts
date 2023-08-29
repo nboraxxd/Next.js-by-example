@@ -9,7 +9,8 @@ interface Review {
   title: string
   date: string
   image: string
-  body: ReactNode | TrustedHTML
+  subtitle: ReactNode
+  body: string | TrustedHTML
 }
 
 type Data = {
@@ -100,5 +101,6 @@ function toReview(item: Data | ExtendedData): Omit<Review, 'body'> {
     title: item.attributes.title,
     date: item.attributes.publishedAt.slice(0, 'yyyy-mm-dd'.length),
     image: `${CMS_URL}${item.attributes.image.data.attributes.url}`,
+    subtitle: item.attributes.subtitle,
   }
 }
