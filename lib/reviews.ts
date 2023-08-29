@@ -48,7 +48,7 @@ export async function getReview(slug: string): Promise<Review> {
   if (data.length === 0) {
     return null
   }
-  
+
   const item = data[0]
   return {
     ...toReview(item),
@@ -91,11 +91,6 @@ export async function getSlugs() {
   })
 
   return data
-}
-
-export async function getFeaturedReview() {
-  const reviews = await getReviews(3)
-  return reviews
 }
 
 function toReview(item: Data | ExtendedData): Omit<Review, 'body'> {

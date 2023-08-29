@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import Heading from '@/components/Heading'
-import { getFeaturedReview } from '@/lib/reviews'
+import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 30
 
 export default async function HomePage() {
-  const reviews = await getFeaturedReview()
+  const reviews = await getReviews(3)
   console.log('🔥 ~ HomePage ~ reviews:', reviews.map((review) => review.slug).join(', '))
 
   return (
