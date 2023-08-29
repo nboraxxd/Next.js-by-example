@@ -19,6 +19,7 @@ export default async function HomePage() {
             width={320}
             height={180}
             className="rounded-t md:rounded-l md:rounded-r-none"
+            priority
           />
           <h2 className="py-2 font-orbitron font-medium text-lg text-center md:grow">{reviews.title}</h2>
         </Link>

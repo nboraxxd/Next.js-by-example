@@ -36,7 +36,7 @@ export default async function ReviewPage({ params: { slug } }: ReviewPageProps) 
         <p className="italic">{review.date}</p>
         <ShareLinkButton />
       </div>
-      <Image src={review.image} alt={review.title} width={640} height={360} className="my-2 rounded" />
+      <Image src={review.image} alt={review.title} width={640} height={360} className="my-2 rounded" priority />
       <article className="max-w-screen-sm prose prose-slate" dangerouslySetInnerHTML={{ __html: review.body }} />
     </>
   )
