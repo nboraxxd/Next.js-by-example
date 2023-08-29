@@ -3,6 +3,8 @@ import Heading from '@/components/Heading'
 import { getFeaturedReview } from '@/lib/reviews'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   const reviews = await getFeaturedReview()
   console.log('🔥 ~ HomePage ~ reviews:', reviews.map((review) => review.slug).join(', '))
