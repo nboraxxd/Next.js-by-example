@@ -1,7 +1,7 @@
 import qs from 'qs'
-import { readdir } from 'node:fs/promises'
 import { marked } from 'marked'
 import { SuccessResponse } from '@/types/utils.type'
+import { ReactNode } from 'react'
 
 interface Review {
   id: number
@@ -9,7 +9,7 @@ interface Review {
   title: string
   date: string
   image: string
-  body: string | TrustedHTML
+  body: ReactNode | TrustedHTML
 }
 
 type Data = {
@@ -54,12 +54,12 @@ export async function getReview(slug: string): Promise<Review> {
   }
 }
 
-export async function getReviews(): Promise<Review[]> {
+export async function getReviews(pageSize: number): Promise<Review[]> {
   const { data } = await fetchReviews<Data>({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],
-    pagination: { pageSize: 6 },
+    pagination: { pageSize },
   })
 
   return data.map((item) => ({
@@ -89,8 +89,8 @@ export async function getSlugs() {
 }
 
 export async function getFeaturedReview() {
-  const reviews = await getReviews()
-  return reviews[0]
+  const reviews = await getReviews(3)
+  return reviews
 }
 
 function toReview(item: Data | ExtendedData): Omit<Review, 'body'> {
