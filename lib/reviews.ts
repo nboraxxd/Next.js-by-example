@@ -45,6 +45,10 @@ export async function getReview(slug: string): Promise<Review> {
     pagination: { pageSize: 1, withCount: false },
   })
 
+  if (data.length === 0) {
+    return null
+  }
+  
   const item = data[0]
   return {
     ...toReview(item),
