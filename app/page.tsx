@@ -2,10 +2,10 @@ import Image from 'next/image'
 import Heading from '@/components/Heading'
 import { getFeaturedReview } from '@/lib/reviews'
 import Link from 'next/link'
-import { ReactNode } from 'react'
 
 export default async function HomePage() {
   const reviews = await getFeaturedReview()
+  console.log('🔥 ~ HomePage ~ reviews:', reviews.map((review) => review.slug).join(', '))
 
   return (
     <>
