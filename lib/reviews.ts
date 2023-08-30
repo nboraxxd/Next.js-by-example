@@ -62,7 +62,7 @@ export async function getReview(slug: string): Promise<Review> {
 }
 
 export async function getReviews(pageSize: number): Promise<Review[]> {
-  const { data } = await fetchReviews<Data>({
+  const { data, meta } = await fetchReviews<Data>({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
     sort: ['publishedAt:desc'],

@@ -32,7 +32,6 @@ export async function generateMetadata({ params: { slug } }: ReviewPageProps): P
 }
 
 export default async function ReviewPage({ params: { slug } }: ReviewPageProps) {
-  console.log('🔥 ~ ReviewPage ~ slug:', slug)
   const review = await getReview(slug)
 
   if (!review) {
