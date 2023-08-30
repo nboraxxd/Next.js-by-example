@@ -35,6 +35,8 @@ type ExtendedData = Pick<Data, 'id'> & { attributes: Data['attributes'] & { body
 
 type ShortenedData = Pick<Data, 'id'> & { attributes: { slug: string } }
 
+export const CACHE_TAG_REVIEWS = 'reviews'
+
 const CMS_URL = 'http://localhost:1337'
 
 export async function getReview(slug: string): Promise<Review> {
@@ -78,7 +80,7 @@ async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
 
   const response = await fetch(url, {
     next: {
-      revalidate: 30,
+      tags: [CACHE_TAG_REVIEWS],
     },
   })
   if (!response.ok) {
