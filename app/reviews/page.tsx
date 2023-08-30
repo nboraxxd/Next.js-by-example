@@ -8,8 +8,6 @@ export const metadata: Metadata = {
   title: 'Reviews',
 }
 
-export const revalidate = 30
-
 export default async function ReviewsPage() {
   const reviews = await getReviews(6)
   console.log('🔥 ~ ReviewsPage ~ reviews:', reviews.map((review) => review.slug).join(', '))
