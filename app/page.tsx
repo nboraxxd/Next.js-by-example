@@ -3,6 +3,7 @@ import Heading from '@/components/Heading'
 import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
 
+export const REVIEWS_URL = '/reviews'
 const POSTS_PER_HOMEPAGE = 3
 const PAGE = 1
 
@@ -20,7 +21,7 @@ export default async function HomePage() {
             key={review.id}
             className="w-80 border rounded bg-white shadow transition-all hover:shadow-lg hover:-mt-[0.125rem] hover:mb-[0.125rem] md:w-full"
           >
-            <Link href={`/reviews/${review.slug}`} className="flex flex-col md:flex-row">
+            <Link href={`${REVIEWS_URL}/${review.slug}`} className="flex flex-col md:flex-row">
               <Image
                 src={review.image}
                 alt={review.title}

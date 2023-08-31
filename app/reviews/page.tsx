@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
 import Heading from '@/components/Heading'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
-import classNames from 'classnames'
+import PaginationBar from '@/components/PaginationBar'
+import { REVIEWS_URL } from '@/app/page'
 
 export const metadata: Metadata = {
   title: 'Reviews',
@@ -25,30 +25,14 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   return (
     <>
       <Heading>Reviews</Heading>
-      <div className="flex items-center gap-2 my-3">
-        <Link
-          href={`/reviews?page=${page - 1}`}
-          className={classNames({ 'pointer-events-none opacity-60': page === 1 })}
-        >
-          <ChevronLeftIcon className="w-4 h-4" />
-        </Link>
-        <span className="">
-          Page {page} of {pageCount}
-        </span>
-        <Link
-          href={`/reviews?page=${page + 1}`}
-          className={classNames({ 'pointer-events-none opacity-60': page === pageCount })}
-        >
-          <ChevronRightIcon className="w-4 h-4" />
-        </Link>
-      </div>
+      <PaginationBar url={REVIEWS_URL} page={page} pageCount={pageCount} />
       <ul className="flex flex-row flex-wrap gap-3 mt-4">
         {reviews.map((review, index) => (
           <li
             key={review.id}
             className="w-80 border rounded bg-white shadow transition-all hover:shadow-lg hover:-mt-[0.125rem] hover:mb-[0.125rem]"
           >
-            <Link href={`/reviews/${review.slug}`}>
+            <Link href={`${REVIEWS_URL}/${review.slug}`}>
               <Image
                 src={review.image}
                 alt={review.title}
