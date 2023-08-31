@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Heading from '@/components/Heading'
 import PaginationBar from '@/components/PaginationBar'
 import { PATH } from '@/components/NavBar'
+import SearchBox from '@/components/SearchBox'
 
 export const metadata: Metadata = {
   title: 'Reviews',
@@ -25,7 +26,10 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   return (
     <>
       <Heading>Reviews</Heading>
-      <PaginationBar url={PATH.reviews} page={page} pageCount={pageCount} />
+      <div className="flex items-center gap-4 my-3">
+        <PaginationBar url={PATH.reviews} page={page} pageCount={pageCount} />
+        <SearchBox />
+      </div>
       <ul className="flex flex-row flex-wrap gap-3 mt-4">
         {reviews.map((review, index) => (
           <li

@@ -17,7 +17,7 @@ interface PaginationLinkProps {
 
 export default function PaginationBar({ url, page, pageCount }: PaginationBarProps) {
   return (
-    <div className="flex items-center gap-2 my-3">
+    <div className="flex items-center gap-2">
       <PaginationLink url={url} page={page - 1} disabled={Boolean(page === 1)}>
         <ChevronLeftIcon className="w-4 h-4" />
         <span className="sr-only">Previous Page</span>
