@@ -3,8 +3,11 @@ import Heading from '@/components/Heading'
 import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
 
+const POSTS_PER_HOMEPAGE = 3
+const PAGE = 1
+
 export default async function HomePage() {
-  const reviews = await getReviews(3)
+  const reviews = await getReviews(POSTS_PER_HOMEPAGE, PAGE)
 
   return (
     <>

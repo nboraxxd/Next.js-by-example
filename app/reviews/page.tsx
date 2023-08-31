@@ -16,9 +16,12 @@ interface ReviewsPageProps {
   }
 }
 
+const POSTS_PER_REVIEWS_PAGE = 6
+
 export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   const page = parsePageParam(searchParams.page)
-  const reviews = await getReviews(6)
+  const reviews = await getReviews(POSTS_PER_REVIEWS_PAGE, page)
+  console.log('🔥 ~ ReviewsPage ~ page:', page)
 
   return (
     <>
