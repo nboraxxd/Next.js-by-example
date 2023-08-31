@@ -4,7 +4,7 @@ import { getReviews } from '@/lib/reviews'
 import Link from 'next/link'
 import Heading from '@/components/Heading'
 import PaginationBar from '@/components/PaginationBar'
-import { REVIEWS_URL } from '@/app/page'
+import { PATH } from '@/components/NavBar'
 
 export const metadata: Metadata = {
   title: 'Reviews',
@@ -25,14 +25,14 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   return (
     <>
       <Heading>Reviews</Heading>
-      <PaginationBar url={REVIEWS_URL} page={page} pageCount={pageCount} />
+      <PaginationBar url={PATH.reviews} page={page} pageCount={pageCount} />
       <ul className="flex flex-row flex-wrap gap-3 mt-4">
         {reviews.map((review, index) => (
           <li
             key={review.id}
             className="w-80 border rounded bg-white shadow transition-all hover:shadow-lg hover:-mt-[0.125rem] hover:mb-[0.125rem]"
           >
-            <Link href={`${REVIEWS_URL}/${review.slug}`}>
+            <Link href={`${PATH.reviews}/${review.slug}`}>
               <Image
                 src={review.image}
                 alt={review.title}

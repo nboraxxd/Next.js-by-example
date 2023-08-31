@@ -1,23 +1,29 @@
-import Link from 'next/link'
+import NavLink from '@/components/NavLink'
+
+export const PATH = {
+  homePage: '/',
+  reviews: '/reviews',
+  about: '/about',
+}
 
 export default function NavBar() {
   return (
     <nav>
       <ul className="flex gap-4">
         <li>
-          <Link href="/" className="text-orange-800 font-orbitron font-semibold hover:underline transition">
+          <NavLink href={PATH.homePage} className="font-orbitron font-semibold hover:text-orange-600">
             Indie Gamer
-          </Link>
+          </NavLink>
         </li>
         <li className="ml-auto">
-          <Link href="/reviews" className="text-orange-800 font-medium hover:underline transition">
+          <NavLink href={PATH.reviews} className="hover:underline">
             Reviews
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link href="/about" className="text-orange-800 font-medium hover:underline transition">
+          <NavLink href={PATH.about} className="hover:underline">
             About
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
