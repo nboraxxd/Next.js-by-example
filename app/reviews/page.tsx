@@ -20,8 +20,7 @@ const POSTS_PER_REVIEWS_PAGE = 6
 
 export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   const page = parsePageParam(searchParams.page)
-  const reviews = await getReviews(POSTS_PER_REVIEWS_PAGE, page)
-  console.log('🔥 ~ ReviewsPage ~ page:', page)
+  const { reviews, pageCount } = await getReviews(POSTS_PER_REVIEWS_PAGE, page)
 
   return (
     <>
@@ -33,10 +32,12 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
         >
           <ChevronLeftIcon className="w-4 h-4" />
         </Link>
-        <span className="">Page {page}</span>
+        <span className="">
+          Page {page} of {pageCount}
+        </span>
         <Link
           href={`/reviews?page=${page + 1}`}
-          // className={classNames({ 'pointer-events-none opacity-60': page === 1 })}
+          className={classNames({ 'pointer-events-none opacity-60': page === pageCount })}
         >
           <ChevronRightIcon className="w-4 h-4" />
         </Link>

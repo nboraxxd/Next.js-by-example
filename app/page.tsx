@@ -7,7 +7,7 @@ const POSTS_PER_HOMEPAGE = 3
 const PAGE = 1
 
 export default async function HomePage() {
-  const reviews = await getReviews(POSTS_PER_HOMEPAGE, PAGE)
+  const { reviews } = await getReviews(POSTS_PER_HOMEPAGE, PAGE)
 
   return (
     <>

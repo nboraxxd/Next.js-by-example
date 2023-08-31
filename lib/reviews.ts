@@ -61,7 +61,7 @@ export async function getReview(slug: string): Promise<Review> {
   }
 }
 
-export async function getReviews(pageSize: number, page: number): Promise<Review[]> {
+export async function getReviews(pageSize: number, page: number): Promise<{ reviews: Review[]; pageCount: number }> {
   const { data, meta } = await fetchReviews<Data>({
     fields: ['slug', 'title', 'subtitle', 'publishedAt'],
     populate: { image: { fields: ['url'] } },
@@ -69,10 +69,14 @@ export async function getReviews(pageSize: number, page: number): Promise<Review
     pagination: { pageSize, page },
   })
 
-  return data.map((item) => ({
+  const reviews = data.map((item) => ({
     ...toReview(item),
     body: item.attributes.subtitle,
   }))
+
+  const pageCount = meta.pagination.pageCount
+
+  return { reviews, pageCount }
 }
 
 async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
