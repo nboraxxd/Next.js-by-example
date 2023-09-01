@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { PATH } from '@/components/NavBar'
 import { getSearchableReviews } from '@/lib/reviews'
+import useDebounce from '@/hooks/useDebounce'
 
 interface SearchBoxProps {
   id: number
@@ -16,13 +17,14 @@ interface SearchBoxProps {
 export default function SearchBox() {
   const router = useRouter()
   const [query, setQuery] = useState('')
+  const debouncedValue = useDebounce(query)
   const [reviews, setReviews] = useState<SearchBoxProps[]>([])
 
   useEffect(() => {
-    if (query.trim().length > 0) {
+    if (debouncedValue.trim().length > 0) {
       ;(async function getReviews() {
         try {
-          const response = await getSearchableReviews(query)
+          const response = await getSearchableReviews(debouncedValue.trim())
           setReviews(response)
         } catch (error) {
           console.log(error)
@@ -31,7 +33,7 @@ export default function SearchBox() {
     } else {
       setReviews([])
     }
-  }, [query])
+  }, [debouncedValue])
 
   function handleOnChange({ slug }: { id: number; slug: string; title: string }) {
     router.push(`${PATH.reviews}/${slug}`)
