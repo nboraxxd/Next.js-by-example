@@ -21,17 +21,19 @@ export default function SearchBox() {
 
   useEffect(() => {
     if (debouncedValue.trim().length > 0) {
+      const cotroller = new AbortController()
       ;(async function getReviews() {
         try {
-          // const response = await getSearchableReviews(debouncedValue.trim())
-          const response = await fetch('/api/search?=query=' + encodeURIComponent(debouncedValue.trim()))
+          const url = '/api/search?query=' + encodeURIComponent(debouncedValue.trim())
+          const response = await fetch(url, { signal: cotroller.signal })
           const _reviews = await response.json()
-          console.log('🔥 ~ getReviews ~ _reviews:', _reviews)
+
           setReviews(_reviews)
         } catch (error) {
           console.log(error)
         }
       })()
+      return () => cotroller.abort()
     } else {
       setReviews([])
     }
