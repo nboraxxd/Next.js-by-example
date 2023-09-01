@@ -5,7 +5,6 @@ import { Combobox } from '@headlessui/react'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { PATH } from '@/components/NavBar'
-import { getSearchableReviews } from '@/lib/reviews'
 import useDebounce from '@/hooks/useDebounce'
 
 interface SearchBoxProps {
@@ -24,8 +23,11 @@ export default function SearchBox() {
     if (debouncedValue.trim().length > 0) {
       ;(async function getReviews() {
         try {
-          const response = await getSearchableReviews(debouncedValue.trim())
-          setReviews(response)
+          // const response = await getSearchableReviews(debouncedValue.trim())
+          const response = await fetch('/api/search?=query=' + encodeURIComponent(debouncedValue.trim()))
+          const _reviews = await response.json()
+          console.log('🔥 ~ getReviews ~ _reviews:', _reviews)
+          setReviews(_reviews)
         } catch (error) {
           console.log(error)
         }
