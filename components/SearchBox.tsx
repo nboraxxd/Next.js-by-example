@@ -5,7 +5,7 @@ import { Combobox } from '@headlessui/react'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { PATH } from '@/components/NavBar'
-import useDebounce from '@/hooks/useDebounce'
+import { useDebounce } from 'use-debounce'
 
 interface SearchBoxProps {
   id: number
@@ -16,7 +16,7 @@ interface SearchBoxProps {
 export default function SearchBox() {
   const router = useRouter()
   const [query, setQuery] = useState('')
-  const debouncedValue = useDebounce(query)
+  const [debouncedValue] = useDebounce(query, 300)
   const [reviews, setReviews] = useState<SearchBoxProps[]>([])
 
   useEffect(() => {
