@@ -13,9 +13,9 @@ export default async function HomePage() {
   return (
     <>
       <Heading>Indie Gamer</Heading>
-      <p className="my-3">Only the best indie games, reviewed for you</p>
+      <p className="mt-3 mb-10 text-center text-xl">Only the best indie games, reviewed for you</p>
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col items-center gap-4">
         {reviews.map((review, index) => (
           <li
             key={review.id}

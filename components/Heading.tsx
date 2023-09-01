@@ -3,5 +3,5 @@ interface HeadingProps {
 }
 
 export default function Heading({ children }: HeadingProps) {
-  return <h1 className="font-orbitron font-bold text-2xl">{children}</h1>
+  return <h1 className="font-orbitron font-bold text-center text-5xl">{children}</h1>
 }

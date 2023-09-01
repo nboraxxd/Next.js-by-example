@@ -5,9 +5,5 @@ interface ReviewLayout {
 }
 
 export default function ReviewLayout({ children }: ReviewLayout) {
-  return (
-    <div>
-      <div>{children}</div>
-    </div>
-  )
+  return <>{children}</>
 }

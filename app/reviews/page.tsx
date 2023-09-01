@@ -22,19 +22,15 @@ const POSTS_PER_REVIEWS_PAGE = 6
 export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   const page = parsePageParam(searchParams.page)
   const { reviews, pageCount } = await getReviews(POSTS_PER_REVIEWS_PAGE, page)
-  // console.log(
-  //   '🔥 ~ ReviewsPage ~ reviews:',
-  //   reviews.map((review) => ({ id: review.id, title: review.title }))
-  // )
 
   return (
     <>
       <Heading>Reviews</Heading>
-      <div className="flex items-center gap-4 my-3">
+      <div className="mt-10 mb-3 mx-auto px-4 max-w-[61.5rem] flex flex-col md:flex-row items-center justify-between gap-2">
         <PaginationBar url={PATH.reviews} page={page} pageCount={pageCount} />
         <SearchBox />
       </div>
-      <ul className="flex flex-row flex-wrap gap-3 mt-4">
+      <ul className="flex flex-wrap justify-center gap-3 mt-4">
         {reviews.map((review, index) => (
           <li
             key={review.id}
