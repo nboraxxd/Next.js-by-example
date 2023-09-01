@@ -6,20 +6,17 @@ import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { PATH } from '@/components/NavBar'
 
-const reviews = [
-  { id: 8, slug: 'hades-2018', title: 'Hades' },
-  { id: 5, slug: 'fall-guys', title: 'Fall Guys: Ultimate Knockout' },
-  { id: 23, slug: 'black-mesa', title: 'Black Mesa' },
-  { id: 14, slug: 'disco-elysium', title: 'Disco Elysium' },
-  { id: 15, slug: 'dead-cells', title: 'Dead Cells' },
-  { id: 22, slug: 'a-way-out-2018', title: 'A Way Out' },
-]
+interface SearchBoxProps {
+  reviews: { id: number; slug: string; title: string }[]
+}
 
-export default function SearchBox() {
+export default function SearchBox({ reviews }: SearchBoxProps) {
   const router = useRouter()
   const [query, setQuery] = useState('')
 
-  const filteredReviews = reviews.filter((review) => review.title.toLowerCase().includes(query.toLowerCase()))
+  const filteredReviews = reviews
+    .filter((review) => review.title.toLowerCase().includes(query.toLowerCase()))
+    .slice(0, 5)
 
   function handleOnChange({ slug }: { id: number; slug: string; title: string }) {
     router.push(`${PATH.reviews}/${slug}`)

@@ -6,10 +6,9 @@ const url =
   '?' +
   qs.stringify(
     {
-      fields: ['slug', 'title', 'subtitle', 'publishedAt'],
-      populate: { image: { fields: ['url'] } },
+      fields: ['slug', 'title'],
       sort: ['publishedAt:desc'],
-      pagination: { pageSize: 6, page: 2 },
+      // pagination: { pageSize: 100 },
     },
     { encodeValuesOnly: true }
   )

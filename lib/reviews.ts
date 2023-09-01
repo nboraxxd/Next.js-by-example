@@ -33,7 +33,9 @@ type Data = {
 
 type ExtendedData = Pick<Data, 'id'> & { attributes: Data['attributes'] & { body: string } }
 
-type ShortenedData = Pick<Data, 'id'> & { attributes: { slug: string } }
+type slugData = Pick<Data, 'id'> & { attributes: { slug: string } }
+
+type searchableReviewsData = Pick<Data, 'id'> & { attributes: { slug: string; title: string } }
 
 export const CACHE_TAG_REVIEWS = 'reviews'
 
@@ -93,8 +95,17 @@ async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
   return await response.json()
 }
 
+export async function getSearchableReviews() {
+  const { data } = await fetchReviews<searchableReviewsData>({
+    fields: ['slug', 'title'],
+    sort: ['publishedAt:desc'],
+  })
+
+  return data.map((item) => ({ id: item.id, slug: item.attributes.slug, title: item.attributes.title }))
+}
+
 export async function getSlugs() {
-  const { data } = await fetchReviews<ShortenedData>({
+  const { data } = await fetchReviews<slugData>({
     fields: ['slug'],
     sort: ['publishedAt:desc'],
     pagination: { pageSize: 100 },
