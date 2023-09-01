@@ -1,22 +1,37 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { PATH } from '@/components/NavBar'
+import { getSearchableReviews } from '@/lib/reviews'
 
 interface SearchBoxProps {
-  reviews: { id: number; slug: string; title: string }[]
+  id: number
+  slug: string
+  title: string
 }
 
-export default function SearchBox({ reviews }: SearchBoxProps) {
+export default function SearchBox() {
   const router = useRouter()
   const [query, setQuery] = useState('')
+  const [reviews, setReviews] = useState<SearchBoxProps[]>([])
 
-  const filteredReviews = reviews
-    .filter((review) => review.title.toLowerCase().includes(query.toLowerCase()))
-    .slice(0, 5)
+  useEffect(() => {
+    if (query.trim().length > 0) {
+      ;(async function getReviews() {
+        try {
+          const response = await getSearchableReviews(query)
+          setReviews(response)
+        } catch (error) {
+          console.log(error)
+        }
+      })()
+    } else {
+      setReviews([])
+    }
+  }, [query])
 
   function handleOnChange({ slug }: { id: number; slug: string; title: string }) {
     router.push(`${PATH.reviews}/${slug}`)
@@ -33,7 +48,7 @@ export default function SearchBox({ reviews }: SearchBoxProps) {
           autoComplete="off"
         />
         <Combobox.Options className="left-0 right-0 top-full absolute rounded bg-white shadow-md">
-          {filteredReviews.map((review, index) => (
+          {reviews.map((review, index) => (
             <Combobox.Option key={review.id} value={review}>
               {({ active }) => (
                 <span

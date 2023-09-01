@@ -95,10 +95,12 @@ async function fetchReviews<T>(parameters: {}): Promise<SuccessResponse<T>> {
   return await response.json()
 }
 
-export async function getSearchableReviews() {
+export async function getSearchableReviews(query: string) {
   const { data } = await fetchReviews<searchableReviewsData>({
+    filters: { title: { $containsi: query } },
     fields: ['slug', 'title'],
-    sort: ['publishedAt:desc'],
+    sort: ['title'],
+    pagination: { pageSize: 5 },
   })
 
   return data.map((item) => ({ id: item.id, slug: item.attributes.slug, title: item.attributes.title }))
