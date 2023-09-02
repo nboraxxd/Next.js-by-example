@@ -41,7 +41,7 @@ type searchableReviewsData = Pick<Data, 'id'> & { attributes: { slug: string; ti
 
 export const CACHE_TAG_REVIEWS = 'reviews'
 
-const CMS_URL = 'http://localhost:1337'
+const CMS_URL = process.env.CMS_URL
 
 export async function getReview(slug: string): Promise<Review> {
   const { data } = await fetchReviews<ExtendedData>({
